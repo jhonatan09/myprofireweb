@@ -8,6 +8,7 @@
   --accent: #22c55e;
 }
 
+/* ---------- Base ---------- */
 * {
   box-sizing: border-box;
 }
@@ -37,14 +38,27 @@ body {
     "Segoe UI Symbol", sans-serif;
 }
 
-/* helpers */
+/* mídias sempre fluídas */
+img,
+iframe {
+  max-width: 100%;
+  display: block;
+}
+
+/* Compensa o header fixo quando navega com #âncoras */
+[id] {
+  scroll-margin-top: 84px;
+}
+
+/* ---------- Helpers ---------- */
 .container {
-  max-width: 1120px;
-  padding: 0 20px;
-  margin: 0 auto;
+  /* largura fluida com “respiro” lateral */
+  width: min(100% - 2rem, 1120px);
+  margin-inline: auto;
 }
 .section {
-  padding: 80px 0;
+  /* padding responsivo */
+  padding-block: clamp(32px, 6vw, 80px);
 }
 
 .badge {
@@ -57,6 +71,12 @@ body {
   font-size: 12px;
 }
 
+/* utilitário de texto */
+.muted {
+  color: var(--muted);
+}
+
+/* Botões */
 .btn {
   display: inline-flex;
   gap: 10px;
@@ -72,7 +92,8 @@ body {
   );
   color: var(--text);
   text-decoration: none;
-  transition: transform 0.15s ease, background 0.2s ease, border-color 0.2s ease;
+  transition: transform 0.15s ease, background 0.2s ease, border-color 0.2s ease,
+    opacity 0.2s ease;
   cursor: pointer;
 }
 .btn:hover {
@@ -84,7 +105,7 @@ body {
   border: none;
 }
 
-/* nav */
+/* ---------- Navegação ---------- */
 .nav {
   position: sticky;
   top: 0;
@@ -97,21 +118,41 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 0;
+  gap: 12px;
+  padding-block: 12px;
 }
 .nav a {
   color: var(--muted);
   text-decoration: none;
   font-size: 14px;
+  padding: 8px 6px; /* aumenta área clicável */
   margin-left: 18px;
 }
 .nav a:hover {
   color: var(--text);
 }
 
-/* hero */
+/* Mobile: links viram faixa rolável (evita quebra/empilhamento) */
+@media (max-width: 640px) {
+  .nav-inner {
+    gap: 8px;
+  }
+  .nav-inner > div:last-child {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+  }
+  .nav a {
+    margin-left: 0;
+    font-size: 13px;
+  }
+}
+
+/* ---------- Hero ---------- */
 .hero {
-  padding: 96px 0 40px;
+  padding: clamp(48px, 8vw, 96px) 0 40px;
 }
 .hero h1 {
   font-size: clamp(32px, 4vw, 56px);
@@ -123,8 +164,13 @@ body {
   font-size: 18px;
   max-width: 700px;
 }
+@media (max-width: 640px) {
+  .hero {
+    text-align: center;
+  }
+}
 
-/* panels */
+/* ---------- Painéis ---------- */
 .panel {
   background: linear-gradient(
     180deg,
@@ -136,7 +182,7 @@ body {
   padding: 24px;
 }
 
-/* grids */
+/* ---------- Grids ---------- */
 .grid {
   display: grid;
   gap: 18px;
@@ -144,18 +190,28 @@ body {
 .grid.cols-3 {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
-@media (max-width: 1000px) {
+@media (max-width: 1024px) {
   .grid.cols-3 {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(2, 1fr);
   }
 }
-@media (max-width: 720px) {
+@media (max-width: 640px) {
   .grid.cols-3 {
     grid-template-columns: 1fr;
   }
 }
 
-/* project cards */
+/* span-2 (usar no “Sobre mim”) — volta a 1 coluna no mobile */
+.span-2 {
+  grid-column: span 2;
+}
+@media (max-width: 640px) {
+  .span-2 {
+    grid-column: auto;
+  }
+}
+
+/* ---------- Cards de projeto ---------- */
 .card {
   position: relative;
   overflow: hidden;
@@ -178,7 +234,7 @@ body {
   height: 100%;
   border: 0;
   display: block;
-  object-fit: cover; /* recorte bonito do thumbnail */
+  object-fit: cover;
 }
 .card .body {
   padding: 16px;
@@ -207,44 +263,54 @@ body {
   border-radius: 999px;
 }
 
-/* modal */
+/* ---------- Modal / Preview ---------- */
 .backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.6);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
   z-index: 60;
+  background: rgba(0, 0, 0, 0.6);
+  display: grid;
+  place-items: center;
+  padding: 20px;
 }
 .modal {
   background: var(--panel);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 16px;
-  width: min(1200px, 100%);
-  height: min(80vh, 760px);
+  width: min(1024px, 100%);
+  max-height: 90vh; /* evita extrapolar a viewport */
   display: flex;
   flex-direction: column;
   overflow: hidden;
 }
-.modal header {
+.modal > header {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 8px;
   padding: 12px 16px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 .modal .content {
+  padding: 0;
   flex: 1;
 }
 .modal iframe {
   width: 100%;
-  height: 100%;
+  height: calc(90vh - 56px);
   border: 0;
 }
 
-/* footer */
+@media (max-width: 480px) {
+  .modal {
+    border-radius: 12px;
+  }
+  .modal iframe {
+    height: calc(90vh - 64px);
+  } /* header um pouco mais alto no mobile */
+}
+
+/* ---------- Rodapé ---------- */
 .footer {
   padding: 40px 0 80px;
   color: var(--muted);
