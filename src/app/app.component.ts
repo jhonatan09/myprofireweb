@@ -84,7 +84,6 @@ No dia a dia, priorizo performance (Core Web Vitals), acessibilidade (A11y), tes
         'Context API',
         'HOOKS',
         'JEST',
-        '',
       ],
     },
     {
@@ -92,6 +91,26 @@ No dia a dia, priorizo performance (Core Web Vitals), acessibilidade (A11y), tes
       url: 'https://jhonatan09.github.io/PokemonsTypeWater/',
       desc: 'Página temática com listagem de Pokémons do tipo água.',
       tags: ['React', 'SCSS', 'JS', 'Axios', 'Context API', 'HOOKS'],
+    },
+    {
+      title: 'Landing Page — Pokémon',
+      url: 'https://jhonatan09.github.io/Pokemon/',
+      desc: 'Página temática com listagem de todos os Pokémons.',
+      tags: [
+        'React',
+        'Typescript',
+        'React-Icons',
+        'Axios',
+        'Context API',
+        'HOOKS',
+        'Styled-Components',
+      ],
+    },
+    {
+      title: 'Dashboard',
+      url: 'https://jhonatan09.github.io/Dashboard/',
+      desc: 'Página de dashboard para contratação de emprestimo, para acessar com o mock (login: Jhonatan, senha: 12345) ou crie uma conta',
+      tags: ['React', 'Context API', 'HOOKS', 'Scss', 'jspdf'],
     },
   ];
 
